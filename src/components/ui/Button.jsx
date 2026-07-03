@@ -1,12 +1,7 @@
-import React from 'react'
-import clsx from 'clsx'
+import React from "react";
+import clsx from "clsx";
 
-const Button = ({
-    children,
-    variant = 'primary',
-    className,
-    ...props
-}) => {
+const Button = ({ children, variant = "primary", className, ...props }) => {
   return (
     <button
       className={clsx(
@@ -23,15 +18,18 @@ const Button = ({
 
           "bg-transparent text-[#00ABE4] hover:bg-[#E9F1FA] focus:ring-sky-400":
             variant === "ghost",
+
+          "bg-white text-[#00ABE4] hover:bg-slate-100 focus:ring-sky-400":
+            variant === "white",
         },
 
-        className
+        className,
       )}
       {...props}
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
