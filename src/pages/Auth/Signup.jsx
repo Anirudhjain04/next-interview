@@ -12,10 +12,12 @@ const Signup = () => {
         <div className="mx-auto max-w-7xl min-h-screen flex items-center px-6 py-10">
           <div className="hidden w-1/2 flex-col justify-center pr-12 lg:flex">
             <div className="flex items-center gap-3">
+              <Link to="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
               <img src={logo} alt="NextInterview_Logo" className="h-12 w-12" />
               <span className="text-2xl font-bold text-slate-900">
                 NextInterview
               </span>
+              </Link>
             </div>
             <h1 className="mt-8 text-5xl font-bold leading-tight text-slate-900">
               Start Practicing Smarter With AI.

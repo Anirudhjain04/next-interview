@@ -6,25 +6,28 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Login = () => {
-
   const handleForgotPassword = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  toast.success(
-    "Forgot Password will be available in a future update."
-  );
-};
+    toast.success("Forgot Password will be available in a future update.");
+  };
   return (
     <>
       <section className="min-h-screen bg-[#F8FAFC]">
         <div className="mx-auto flex min-h-screen max-w-7xl items-center px-6 py-10">
           <div className="hidden w-1/2 flex-col justify-center pr-12 lg:flex">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="NextInterview_Logo" className="h-12 w-12" />
+              <Link to="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
+                <img
+                  src={logo}
+                  alt="NextInterview_Logo"
+                  className="h-12 w-12"
+                />
 
-              <span className="text-2xl font-bold text-slate-900">
-                NextInterview
-              </span>
+                <span className="text-2xl font-bold text-slate-900">
+                  NextInterview
+                </span>
+              </Link>
             </div>
 
             <h1 className="mt-8 text-5xl font-bold leading-tight text-slate-900">

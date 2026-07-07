@@ -28,6 +28,14 @@ const Navbar = () => {
           <ul className="hidden items-center gap-10 text-base font-medium text-slate-700 md:flex">
             <li>
               <a
+                href="#how-it-works"
+                className="transition-colors hover:text-[#00ABE4]"
+              >
+                How It Works
+              </a>
+            </li>
+            <li>
+              <a
                 href="#features"
                 className="transition-colors hover:text-[#00ABE4]"
               >
@@ -35,14 +43,6 @@ const Navbar = () => {
               </a>
             </li>
 
-            <li>
-              <a
-                href="#how-it-works"
-                className="transition-colors hover:text-[#00ABE4]"
-              >
-                How It Works
-              </a>
-            </li>
           </ul>
 
           {/* Authentication */}
