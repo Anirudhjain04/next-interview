@@ -1,9 +1,11 @@
-// import React from 'react'
+import React, { useState } from 'react'
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 import logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { login } from "../../services/authService"
+
 
 const Login = () => {
   const handleForgotPassword = (e) => {
@@ -11,6 +13,37 @@ const Login = () => {
 
     toast.success("Forgot Password will be available in a future update.");
   };
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await login(formData)
+
+      toast.success(response.message);
+
+      navigate("/");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  }
+
   return (
     <>
       <section className="min-h-screen bg-[#F8FAFC]">
@@ -50,19 +83,25 @@ const Login = () => {
                 Sign in to continue your interview preparation.
               </p>
 
-              <form className="mt-8 space-y-5">
+              <form onSubmit={handleLogin} className="mt-8 space-y-5">
                 <Input
                   id="email"
+                  name="email"
                   label="Email"
                   type="email"
                   placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
 
                 <Input
                   id="password"
+                  name="password"
                   label="Password"
                   type="password"
                   placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
 
                 <div className="flex justify-end">
@@ -75,7 +114,7 @@ const Login = () => {
                   </button>
                 </div>
 
-                <Button variant="primary" className="w-full py-3">
+                <Button type="submit" variant="primary" className="w-full py-3">
                   Login
                 </Button>
               </form>
