@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 
+// Signup Controller
 export const signupUser = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
@@ -15,14 +16,14 @@ export const signupUser = async (req, res) => {
 
     // Check Existing User
     const existingUser = await User.findOne({ email: normalizedEmail });
-  
+
     if (existingUser) {
       return res.status(409).json({
         success: false,
         message: "User already exists with this email.",
       });
     }
-  
+
     // Hash Password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -40,9 +41,8 @@ export const signupUser = async (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-      }
+      },
     });
-
   } catch (error) {
     console.error("Signup Error:", error);
 
@@ -51,5 +51,60 @@ export const signupUser = async (req, res) => {
       message: "Internal Server Error",
     });
   }
+};
 
+// Login Controller
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and Password are required.",
+      });
+    }
+
+    // Find User
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+
+    // Compare Password
+    const isPasswordMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
+
+    if (!isPasswordMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful.",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+      },
+    });
+
+  } catch (error) {
+    console.error("Login Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
 };
