@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import generateToken from "../utils/generateToken.js";
 
 // Signup Controller
 export const signupUser = async (req, res) => {
@@ -30,7 +31,7 @@ export const signupUser = async (req, res) => {
     // Create User
     const user = await User.create({
       fullName,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
     });
 
@@ -57,6 +58,7 @@ export const signupUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = email.toLowerCase().trim();
 
     // Validation
     if (!email || !password) {
@@ -67,7 +69,7 @@ export const loginUser = async (req, res) => {
     }
 
     // Find User
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       return res.status(404).json({
@@ -89,9 +91,12 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    const token = generateToken(user._id);
+
     return res.status(200).json({
       success: true,
       message: "Login successful.",
+      token,
       user: {
         id: user._id,
         fullName: user.fullName,
