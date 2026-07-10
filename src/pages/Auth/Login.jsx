@@ -4,7 +4,8 @@ import Button from "../../components/ui/Button";
 import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { login } from "../../services/authService"
+import { login as loginUser } from "../../services/authService"
+import { useAuth } from '../../context/authContext';
 
 
 const Login = () => {
@@ -20,6 +21,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate()
+  const {login} = useAuth();
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -34,7 +36,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await login(formData)
+      const response = await loginUser(formData)
+
+      login(response.user, response.token);
 
       toast.success(response.message);
 
