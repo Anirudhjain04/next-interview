@@ -1,13 +1,15 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Landing from '../pages/Landing/Landing'
-import Login from '../pages/Auth/Login'
-import Signup from '../pages/Auth/Signup'
-import Dashboard from '../pages/Dashboard/Dashboard'
-import Interview from '../pages/Interview/Interview'
-import History from '../pages/History/History'
-import Profile from '../pages/Profile/Profile'
+import Landing from "../pages/Landing/Landing";
+import Login from "../pages/Auth/Login";
+import Signup from "../pages/Auth/Signup";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Interview from "../pages/Interview/Interview";
+import History from "../pages/History/History";
+import Profile from "../pages/Profile/Profile";
+
+import ProtectedRoute from "../pages/Auth/ProtectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -15,12 +17,40 @@ const AppRoutes = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/interview" element={<Interview />} />
-      <Route path="/history" element={<History />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/interview"
+        element={
+          <ProtectedRoute>
+            <Interview />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <ProtectedRoute>
+            <History />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
-  )
-}
+  );
+};
 
-export default AppRoutes
+export default AppRoutes;

@@ -5,7 +5,7 @@ import logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { login as loginUser } from "../../services/authService"
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../context/AuthContext';
 
 
 const Login = () => {
