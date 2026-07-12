@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react'
+import { getCurrentUser } from '../services/authService';
 
 const AuthContext = createContext();
 
@@ -7,16 +8,33 @@ export const AuthProvider = ({children}) => {
     const [token, setToken] = useState(null)
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        const storedToken = localStorage.getItem('token')
+        const loadUser = async() => {
+            const storedToken = localStorage.getItem("token")
 
-        if (storedUser) {
-            setUser(JSON.parse(storedUser))
-        }
+            // No token means user is not logged in
+            if(!storedToken) return
 
-        if (storedToken) {
+            // Set token in state
             setToken(storedToken)
-        }
+            try {
+                // Fetch latest user from backend
+                const response = await getCurrentUser();
+                setUser(response.user);
+
+                // Update localStorage with latest user data
+                localStorage.setItem("user", JSON.stringify(response.user))
+            } catch (error) {
+                console.error("Failed to load user:", error);
+
+                // Invalid or expired token
+                setUser(null)
+                setToken(null)
+
+                localStorage.removeItem("user")
+                localStorage.removeItem("token")
+            }
+        };
+        loadUser();
     }, []);
 
     const login = (userData, userToken) => {
