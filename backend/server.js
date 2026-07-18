@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import interviewRoutes from "./routes/interviewRoutes.js";
 
 dotenv.config();
 
@@ -24,3 +25,5 @@ app.listen(PORT, () => {
 })
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/interviews", interviewRoutes)
