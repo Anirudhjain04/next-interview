@@ -9,6 +9,9 @@ import Interview from "../pages/Interview/Interview";
 import History from "../pages/History/History";
 import Profile from "../pages/Profile/Profile";
 
+import GenerateInterview from "../pages/Interview/GenerateInterview";
+import InterviewDetails from "../pages/Interview/InterviewDetails";
+
 import ProtectedRoute from "../pages/Auth/ProtectedRoute";
 
 const AppRoutes = () => {
@@ -49,7 +52,16 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/interview/generate"
+        element={<GenerateInterview />}
+      />
+      <Route
+        path="/interview/:id"
+        element={<InterviewDetails />}
+      />
     </Routes>
+    
   );
 };
 

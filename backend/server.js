@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import interviewRoutes from "./routes/interviewRoutes.js";
+import testRoutes from "./routes/testRoutes.js";
 
 dotenv.config();
 
@@ -20,10 +21,14 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-})
 
 app.use("/api/auth", authRoutes);
 
 app.use("/api/interviews", interviewRoutes)
+
+app.use("/api/test", testRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+})
+// console.log("Gemini Key:", process.env.GEMINI_API_KEY);
