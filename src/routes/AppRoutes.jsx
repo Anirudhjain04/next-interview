@@ -60,6 +60,10 @@ const AppRoutes = () => {
         path="/interview/:id"
         element={<InterviewDetails />}
       />
+      <Route
+      path="/interview/:id/start"
+      element={<Interview />}
+      />
     </Routes>
     
   );
